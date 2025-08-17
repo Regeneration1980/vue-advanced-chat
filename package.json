@@ -31,14 +31,16 @@
 	"unpkg": "./dist/vue-advanced-chat.umd.js",
 	"jsdelivr": "./dist/vue-advanced-chat.umd.js",
 	"scripts": {
-		"dev": "vite",
-		"build": "vite build",
-		"serve": "vite preview",
-		"clean:lib": "rm -rf dist/*.js && rm -rf dist/*.map && rm -rf dist/*.css && rm -rf dist/*.html",
-		"lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
-		"reset": "rm -rf node_modules && rm -rf package-lock.json && npm i",
-		"reset-all": "cd demo && npm run reset-all",
-		"pull-master": "git pull origin master --no-edit --no-ff"
+		"serve": "vue-cli-service serve",
+		"build": "npm run clean:lib && npm run build:lib && npm run build:wc",
+		"clean:lib": "rimraf dist/*.js dist/*.map dist/*.css dist/*.html",
+		"build:lib": "vue-cli-service build --target lib --no-clean --name vue-advanced-chat ./src/lib/index.js",
+		"build:wc": "vue-cli-service build --target wc --no-clean --name vue-advanced-chat ./src/lib/ChatWindow.vue",
+		"publish-beta": "npm publish --tag beta",
+		"lint": "vue-cli-service lint",
+		"test": "jest",
+		"reset": "rimraf node_modules package-lock.json && npm i",
+		"reset-all": "cd demo && npm run reset-all"
 	},
 	"typings": "types/index.d.ts",
 	"files": [
@@ -46,30 +48,34 @@
 		"types/*"
 	],
 	"devDependencies": {
-		"@babel/core": "7.12.16",
-		"@semantic-release/changelog": "^6.0.3",
-		"@semantic-release/git": "^10.0.1",
-		"@semantic-release/github": "^9.2.1",
-		"@typescript-eslint/eslint-plugin": "5.4.0",
-		"@typescript-eslint/parser": "5.4.0",
-		"@vitejs/plugin-vue": "1.10.2",
-		"@vue/compiler-sfc": "3.2.22",
-		"@vue/eslint-config-standard": "4.0.0",
-		"@vue/eslint-config-typescript": "9.1.0",
-		"babel-eslint": "10.0.3",
-		"eslint": "7.32.0",
-		"eslint-plugin-vue": "8.0.3",
-		"node-sass": "8.0.0",
-		"sass": "1.56.1",
-		"semantic-release": "^22.0.5",
+		"@typescript-eslint/eslint-plugin": "^4.29.1",
+		"@typescript-eslint/parser": "^4.29.1",
+		"@vue/cli-plugin-babel": "^4.5.13",
+		"@vue/cli-plugin-eslint": "^4.5.13",
+		"@vue/cli-plugin-typescript": "^4.5.13",
+		"@vue/cli-service": "^4.5.13",
+		"@vue/eslint-config-standard": "^4.0.0",
+		"@vue/eslint-config-typescript": "^7.0.0",
+		"@vue/test-utils": "^1.1.3",
+		"babel-core": "^7.0.0-bridge.0",
+		"babel-eslint": "^10.0.3",
+		"babel-jest": "^23.6.0",
+		"eslint": "^6.8.0",
+		"eslint-plugin-vue": "^7.14.0",
+		"jest": "^23.6.0",
+		"node-sass": "^6.0.1",
+		"rimraf": "^3.0.2",
+		"sass-loader": "^10.1.1",
 		"typescript": "4.6.x",
 		"vite": "2.9.16",
 		"vue": "3.2.37",
 		"vue-loader": "^16.8.3"
 	},
 	"dependencies": {
+		"lamejs": "1.2.0",
 		"emoji-picker-element": "1.12.1",
-		"micromark": "^3.1.0",
-		"micromark-extension-gfm": "^2.0.1"
-	}
+		"linkifyjs": "^2.1.9",
+		"v-click-outside": "^3.1.2"
+	},
+	"optionalDependencies": {}
 }
